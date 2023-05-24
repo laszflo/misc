@@ -1,0 +1,18 @@
+name: Create branch from issue
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  create_branch:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Create branch
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git checkout -b issue/${{ github.event.issue.number }}
+        git push origin issue/${{ github.event.issue.number }}
